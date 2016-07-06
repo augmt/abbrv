@@ -1,0 +1,22 @@
+{
+  "name": "abbrv",
+  "version": "1.0.0",
+  "description": "URL Shortener Microservice",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/augmt/abbrv.git"
+  },
+  "author": "Hector Garcia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/augmt/abbrv/issues"
+  },
+  "homepage": "https://github.com/augmt/abbrv#readme",
+  "dependencies": {
+    "express": "4.14.0"
+  }
+}
