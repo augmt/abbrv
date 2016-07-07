@@ -42,7 +42,7 @@ app.get(/\/((?:https|http):\/\/)(.+)/, function (req, res) {
 
             if (document) {
                 db.close();
-                return res.json({error: `an abbrv already exists for ${url}`});
+                return res.json({"shortened_url": `https://${host}/${document.hash}`});
             }
 
             let hash = "";
