@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/augmt/abbrv#readme",
   "dependencies": {
-    "express": "4.14.0"
+    "express": "4.14.0",
+    "mongodb": "2.1.8",
+    "randomstring": "1.1.5"
   }
 }
