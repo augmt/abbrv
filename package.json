@@ -1,24 +1,28 @@
 {
-  "name": "abbrv",
+  "name": "url-shortener-microservice",
   "version": "1.0.0",
   "description": "URL Shortener Microservice",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/augmt/abbrv.git"
-  },
-  "author": "Hector Garcia",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/augmt/abbrv/issues"
+  "author": {
+    "name": "Hector Garcia",
+    "email": "soseinhg3@gmail.com"
   },
-  "homepage": "https://github.com/augmt/abbrv#readme",
+  "main": "app.js",
+  "scripts": {
+    "start": "node index.js"
+  },
   "dependencies": {
-    "express": "4.14.0",
-    "mongodb": "2.1.8",
+    "babel-plugin-transform-async-to-generator": "6.8.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "6.11.5",
+    "babel-plugin-transform-runtime": "6.12.0",
+    "babel-register": "6.11.6",
+    "babel-runtime": "6.11.6",
+    "kcors": "2.1.1",
+    "koa": "2.0.0-alpha.5",
+    "koa-json": "2.0.2",
+    "koa-router": "7.0.1",
+    "mongodb": "2.2.8",
     "randomstring": "1.1.5"
-  }
+  },
+  "private": true
 }
