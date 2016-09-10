@@ -4,4 +4,4 @@ require('babel-register');
 
 const app = require('./app.js');
 
-app.listen(process.env.PORT || 3000);
+module.exports = app.listen();
