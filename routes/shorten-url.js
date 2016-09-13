@@ -2,18 +2,23 @@
 
 const randomstring = require('randomstring');
 
-module.exports = async function (ctx) {
-  const host = ctx.get('host');
+let hostname, re, path;
 
-  if (ctx.captures[1].startsWith(host)) ctx.throw(403);
+module.exports = async function (ctx) {
+  hostname = hostname || ctx.hostname;
+  re = re || new RegExp(`^${hostname}.+$`);
+  path = path || ctx.header['x-forwarded-path'];
+
+  const url = ctx.url.slice(1);
+
+  if (re.test(url)) ctx.throw(403);
 
   const aliases = ctx.db.collection('aliases');
-  const url = ctx.captures.join('');
   const document = await aliases.findOne({url});
   const alias = (document && document.alias) || randomstring.generate(3);
 
   if (document === null) await aliases.insert({alias, url});
 
-  ctx.body = {'shortened_url': `https://${host}/${alias}`};
+  ctx.body = {'shortened_url': `https://${hostname}${path}/${alias}`};
   ctx.type = 'application/json';
 };

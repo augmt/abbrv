@@ -7,7 +7,7 @@ const redirect = require('./redirect.js');
 
 const router = module.exports = new Router();
 
-const rURL = /^\/(https?:\/\/)(.+?)\/*$/i;
+const rURL = /^\/https?:\/\/.+?\/*$/i;
 const rAlphaNum = /^\/([0-9a-zA-Z]{3})\/*$/;
 
 router.get('/', (ctx) => {
