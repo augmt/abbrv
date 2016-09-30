@@ -1,10 +1,39 @@
-URL Shortener Microservice
-==========================
+# URL Shortener Microservice
 
-Generate short aliases for your HTTP and HTTPS URLs.
+Generate short aliases for HTTP and HTTPS URLs.
 
-Notes
------
-Aliases redirect to the exact protocol and subdomain passed to the microservice.  
-The microservice can ONLY be accessed via GET requests.  
-The microservice supports CORS requests from any origin.
+## Resources
+
+### GET /:url
+
+Returns a shortened URL.
+
+Example request URLs:
+
+`https://url-shortener-microservice.example.com/http://zombo.com`
+
+#### Responses
+
+**STATUS 200** - application/json
+
+##### EXAMPLE
+
+    {
+      shortened_url: https://url-shortener-microservice.example.com/H2O
+    }
+
+**STATUS 403** Returned if url is a shortened url.
+
+### GET /:alias
+
+Redirects to the original URL.
+
+Example request URLs:
+
+`https://url-shortener-microservice.example.com/H2O`
+
+#### Responses
+
+**STATUS 301** - text/html
+
+**STATUS 404** Returned if alias does not point to a URL.

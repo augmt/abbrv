@@ -1,15 +1,42 @@
 'use strict';
 
-describe('app', function () {
-  describe('when given a URL', function () {
-    it('should respond with json');
+import test from 'tape';
+import { expect } from 'chai';
+import request from 'supertest';
+import app from './../src/app.js';
 
-    it('should process valid URLs');
+const server = app.listen();
 
-    it('should return an error for invalid URLs');
+test(app.name, (t) => {
+  let alias;
+
+  t.test('when passed a valid url', (t) => {
+    t.plan(2);
+
+    request(server)
+      .get('/http://zombo.com')
+      .expect('Content-Type', /json/)
+      .end((err) => t.ifError(err, 'content-type should be json'));
+
+    request(server)
+      .get('/http://zombo.com')
+      .expect((res) => expect(res.body).to.have.all.keys(['shortened_url']))
+      .end((err, res) => {
+        t.ifError(err, 'response properties should consist of all and only the specified properties');
+
+        alias = res.body.shortened_url.slice(-3);
+      });
   });
 
-  describe('when given an alias', function () {
-    it('should redirect to the original link');
+  t.test('when visiting a shortened url', (t) => {
+    t.plan(1);
+
+     request(server)
+      .get('/' + alias)
+      .expect(301)
+      .expect((res) => expect(res.header.location).to.equal('http://zombo.com'))
+      .end((err) => t.ifError(err, 'it should 301 redirect to the original link'));
   });
 });
+
+test.onFinish(() => server.close(() => app.context.db.close()));
