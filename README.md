@@ -1,6 +1,7 @@
 # URL Shortener Microservice
 
-Generate short aliases for HTTP and HTTPS URLs.
+URL Shortener Microservice is a REST API which generates short aliases for HTTP
+and HTTPS URLs.
 
 ## Resources
 
