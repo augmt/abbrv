@@ -1,6 +1,6 @@
 {
   "name": "@augmt/url-shortener-microservice",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "URL Shortener Microservice",
   "license": "MIT",
   "author": {
@@ -14,7 +14,7 @@
   },
   "scripts": {
     "build": "babel src -d lib",
-    "publish": "npm run build",
+    "prepublish": "npm run build",
     "test": "tape -r dotenv/config -r babel-register test/test.js"
   },
   "dependencies": {
