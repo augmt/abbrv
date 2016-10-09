@@ -1,6 +1,6 @@
 {
   "name": "@augmt/url-shortener-microservice",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "URL Shortener Microservice",
   "license": "MIT",
   "author": {
