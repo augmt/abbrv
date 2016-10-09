@@ -7,14 +7,16 @@ const router = new Router();
 
 let originServer;
 
-router.get(/^\/https?:\/\/[^/]+(?:\/[^/]+)*\/?$/, async (ctx) => {
+// @stephenhay's url validation regex via
+// https://mathiasbynens.be/demo/url-regex
+router.get('\/(https?):\/\/([^\s/$.?#].[^\s]*)', async (ctx) => {
   originServer = originServer || {
     href: `https://${ctx.hostname}${ctx.get('x-forwarded-path')}`,
     reHost: new RegExp(`^${ctx.hostname}.+$`)
   };
-  const url = ctx.url.slice(1);
+  const url = ctx.captures.join('');
 
-  if (originServer.reHost.test(url)) ctx.throw(403);
+  if (originServer.reHost.test(ctx.captures[1])) ctx.throw(403);
 
   const aliases = ctx.db.collection('aliases');
   const document = await aliases.findOne({url});
