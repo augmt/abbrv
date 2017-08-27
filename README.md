@@ -1,40 +1,66 @@
 # URL Shortener Microservice
 
-URL Shortener Microservice is a REST API which generates short aliases for HTTP
-and HTTPS URLs.
+Shorten long URLs.
 
-## Resources
+## How it Works
 
-### GET /:url
+This microservice uses [Monk][1] to store and retrieve objects,
+[normalize-url][2] and [random-js][3] to normalize URLs and generate unique
+aliases, the [WHATWG URL API][4] to validate URLs, and [Koa][5] and
+[koa-router][6] to serve requests.
 
-Returns a shortened URL.
+[1]: https://github.com/Automattic/monk
+[2]: https://github.com/sindresorhus/normalize-url
+[3]: https://github.com/ckknight/random-js
+[4]: https://nodejs.org/api/url.html#url_the_whatwg_url_api
+[5]: http://koajs.com/
+[6]: https://github.com/alexmingoia/koa-router
 
-Example request URLs:
+## How to Use
 
-`https://url-shortener-microservice.example.com/http://zombo.com`
+`app.js` exports a Koa app. Koa apps have an [`app.listen()`][7] method that is
+identical to Node's [http.Server.listen()][8].
 
-#### Responses
+Import `app.js` and call `app.listen()` to start up the microservice.
 
-**STATUS 200** - application/json
+[7]: http://koajs.com/#app-listen-
+[8]: https://nodejs.org/api/http.html#http_server_listen_port_hostname_backlog_callback
 
-##### EXAMPLE
+### Environment Variables
 
-    {
-      shortened_url: https://url-shortener-microservice.example.com/H2O
+* `MONGO_URI` - your Mongo database's connection string
+
+## API Resources
+
+### POST /new/:url
+
+Returns a `ShortUrl` object.
+
+#### REQUEST
+
+__Sample__: `https://url-shortener-microservice.example.com/new/http://example.com`
+
+#### RESPONSE
+
+__Status__: 200 - `application-json`
+
+__Response__:
+
+    {  
+      "originalurl": "http://example.com/",
+      "shorturl": "http://url-shortener-microservice.example.com/6uZ"
     }
-
-**STATUS 403** Returned if url is a shortened url.
 
 ### GET /:alias
 
-Redirects to the original URL.
+Redirects the client to the corresponding long URL.
 
-Example request URLs:
+#### REQUEST
 
-`https://url-shortener-microservice.example.com/H2O`
+__Sample__: `https://url-shortener-microservice.example.com/6uZ`
 
-#### Responses
+#### RESPONSE
 
-**STATUS 301** - text/html
+__Status__: 302
 
-**STATUS 404** Returned if alias does not point to a URL.
+__Location__: `http://example.com/`
